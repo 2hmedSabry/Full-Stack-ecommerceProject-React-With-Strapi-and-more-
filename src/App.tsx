@@ -5,6 +5,7 @@ import AboutPage from './pages/About'
 import ProductsPage from './pages/Products'
 import ProductPage from './pages/Product'
 import Navbar from './layout/Navbar'
+import LoginPage from './pages/LoginPage'
 
 
 const App= () => {
@@ -17,6 +18,7 @@ const App= () => {
       <Route path="/products" element={<ProductsPage />} />
       <Route path='/products/:id' element={<ProductPage />} />
       <Route path="/about" element={<AboutPage />} />
+      <Route path="/login" element={<LoginPage />}  />
       </Routes>
     </>
   )
