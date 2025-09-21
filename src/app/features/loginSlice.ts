@@ -74,7 +74,8 @@ const loginSlice = createSlice({
         date.setTime(date.getTime() + EXPIRES_AT);
         const options = {
           path : '/'
-          , expires: date
+          , expires: date,
+          httpOnly: true
         }
         CookiesService.setCookie('jwt', action.payload.jwt , options);
         toast({

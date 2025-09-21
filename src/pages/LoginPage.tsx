@@ -21,13 +21,21 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLogin, userLogin } from "../app/features/loginSlice";
 import type { AppDispatch } from "../app/store";
+import { Navigate } from "react-router-dom";
+
 
 interface User {
   identifier: string;
   password: string;
 }
 
-export default function Login() {
+
+
+
+export default function Login({ isAuthenticated }: { isAuthenticated: boolean }) {
+
+
+  
   const dispatch = useDispatch<AppDispatch>();
   const {loading } = useSelector(selectLogin);
 
@@ -39,6 +47,12 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
   const [isidentifierValid, setIsidentifierValid] = useState<boolean>(false);
+  const bgFlex = useColorModeValue("gray.50", "gray.800")
+  const bgFlex2 = useColorModeValue("white", "gray.900")
+      
+
+
+  if(isAuthenticated) return (<Navigate to={'/'} replace />)
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({
@@ -79,7 +93,7 @@ export default function Login() {
       minH={"100vh"}
       align={"center"}
       justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}
+    bg={bgFlex}
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
@@ -88,7 +102,7 @@ export default function Login() {
         <Box
           as="form"
           rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
+          bg={bgFlex2}
           boxShadow={"lg"}
           p={8}
           onSubmit={submitHandler}
