@@ -1,9 +1,11 @@
-import ReactDOM from "react-dom/client"
-import { ChakraProvider, extendTheme, ColorModeScript } from "@chakra-ui/react"
-import { BrowserRouter as Router } from "react-router-dom"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import App from "./App"
-import "./index.css"
+import ReactDOM from "react-dom/client";
+import { ChakraProvider, extendTheme, ColorModeScript } from "@chakra-ui/react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import App from "./App";
+import "./index.css";
+import { Provider } from "react-redux";
+import store from "./app/store";
 
 // 1. Chakra UI theme
 const theme = extendTheme({
@@ -20,7 +22,9 @@ const theme = extendTheme({
       700: "#2a69ac",
     },
   },
-})
+});
+
+
 
 //2. TanStack Query
 const queryClient = new QueryClient({
@@ -29,16 +33,18 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
     },
   },
-})
+});
 
 // 3. Render App
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <QueryClientProvider client={queryClient}>
-    <Router>
-      <ChakraProvider theme={theme}>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <App />
-      </ChakraProvider>
-    </Router>
-  </QueryClientProvider>
-)
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <ChakraProvider theme={theme}>
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+          <App />
+        </ChakraProvider>
+      </Router>
+    </QueryClientProvider>
+  </Provider>
+);

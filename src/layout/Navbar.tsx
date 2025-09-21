@@ -18,14 +18,11 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { BsMoon, BsSun } from "react-icons/bs";
-import {Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
+const Links = ["Dashboard", "Products", "About"];
 
-
-const Links = ["Dashboard", "Projects", "Team"];
-
-const NavLink = ({children }: { children: string }) => {
-
+const NavLink = ({ children }: { children: string }) => {
   return (
     <Link
       as={RouterLink}
@@ -38,7 +35,7 @@ const NavLink = ({children }: { children: string }) => {
         bg: useColorModeValue("gray.200", "gray.700"),
       }}
     >
-      {children }
+      {children}
     </Link>
   );
 };
@@ -50,7 +47,6 @@ export default function Navbar() {
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-
           <HStack spacing={8} alignItems={"center"}>
             <RouterLink to="/">My App</RouterLink>
             <HStack
@@ -58,8 +54,6 @@ export default function Navbar() {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-
-
               {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
               ))}

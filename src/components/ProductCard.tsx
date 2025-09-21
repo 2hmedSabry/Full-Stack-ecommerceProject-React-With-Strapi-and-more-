@@ -1,18 +1,8 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Image,
-  Stack,
-  Text,
-  Heading,
-  Flex,
-} from "@chakra-ui/react";
+import { Button, Image, Stack, Text, Heading, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 interface Product {
-  id: number;
+  documentId: number;
   title: string;
   description: string;
   price: number;
@@ -25,70 +15,109 @@ interface Product {
   };
 }
 
-const ProductCard = (product: Product) => {
+const   ProductCard = (product: Product) => {
   return (
-    <Link to={`/products/${product.id}`}>
-      <Card maxW="sm" overflow="hidden" border="1px solid #a8b5c8" bg="none">
-      {/* Product Image */}
-      <Image
-        src={`${import.meta.env.VITE_SERVER_URL}${product?.image?.url}`}
-        alt={product.title}
+    <Link to={`/products/${product.documentId}`}>
+      <Stack
+        maxW="xs"
         mx="auto"
-        objectFit="cover"
-        h="200px"
-        w="full"
-      />
-
-      {/* Product Content */}
-      <CardBody>
-        <Stack spacing="3">
-          <Flex justifyContent="space-between" alignItems={"center"}>
-            <Heading size="md">{product.title.toUpperCase()}</Heading>
-            <Text color="purple.600" fontSize="2xl" fontWeight="bold">
-              ${product.price}
-            </Text>
-          </Flex>
-          <Text fontSize="md">{product.description}</Text>
-          <Flex justifyContent="space-between" alignItems={"center"}>
-
-          <Text fontSize="sm" fontWeight={"bold"} color="gray.400" >
-            {product.stock == 0 ? "Out of Stock" : `${product.stock} in stock`}
+        bg="white"
+        _dark={{
+          bg: "gray.800",
+        }}
+        shadow="lg"
+        rounded="lg"
+        justifyContent={"space-between"}
+      >
+        <Stack px={4} py={2}>
+          <Heading
+            color="gray.800"
+            _dark={{
+              color: "white",
+            }}
+            fontWeight="bold"
+            fontSize="3xl"
+            textTransform="uppercase"
+          >
+            {product.title}
+          </Heading>
+          <Text
+            mt={1}
+            fontSize="sm"
+            color="gray.600"
+            _dark={{
+              color: "gray.400",
+            }}
+            minH={"126"}
+          >
+            {product.description}
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quos
+            quidem sequi illum facere recusandae voluptatibus
           </Text>
-          <Text fontSize="sm" color="gray.600">
-             SAMSUNG
-          </Text>
-          </Flex>
         </Stack>
-      </CardBody>
 
-      {/* Footer with Button */}
-      <CardFooter p={0} px={5} pb={5} gap={4}>
-        <Button
-          bg="#9f7aea"
-          color="#e6f3fd"
-          size="lg"
-          variant="outline"
-          border="none"
-          py={5}
+        <Image
+          h={48}
           w="full"
-          _hover={{ bg: "#e6f3fd", color: "#563891ff" }}
+          fit="cover"
+          mt={2}
+          src={`${import.meta.env.VITE_SERVER_URL}` + product.image.url}
+          alt={product.title}
+        />
+        <Flex justifyContent={"space-between"} px={6}>
+          <Text fontSize="sm" fontWeight={"bold"} color="gray.400">
+            {product.price}
+          </Text>
+
+          <Text fontSize="sm" fontWeight={"bold"} color="gray.400">
+            {product.stock == 0 ? "Out of Stock" : `${product.stock} in Stock`}
+          </Text>
+        </Flex>
+
+        <Flex
+          alignItems="center"
+          justifyContent="space-between"
+          px={4}
+          py={2}
+          roundedBottom="lg"
+          bg="#e6f3fd"
+          _dark={{
+            bg: "gray.900",
+          }}
         >
-          View Details
-        </Button>
-        <Button
-          bg="#9f7aea"
-          color="#e6f3fd"
-          size="lg"
-          variant="outline"
-          border="none"
-          py={5}
-          w="full"
-          _hover={{ bg: "#e6f3fd", color: "#9f7aea" }}
-        >
-          Add to Cart
-        </Button>
-      </CardFooter>
-    </Card>
+          <Heading
+            fontWeight="bold"
+            fontSize="lg"
+            color= "#9f7aea"
+            _dark={{
+              color: "#e6f3fd",
+            }}
+          >
+            ${product.price}
+          </Heading>
+          <Button
+            px={2}
+            py={1}
+            bg="#9f7aea"
+            color="#e6f3fd"
+            fontSize="xs"
+            fontWeight="bold"
+            rounded="lg"
+            textTransform="uppercase"
+            _hover={{ bg: "#e6f3fd", color: "#563891ff" }}
+            _focus={{
+              bg: "#e6f3fd",
+              color: "#563891ff",
+            }}
+            _active={{
+              bg: "gray.400",
+              transform: "scale(0.95)",
+            }}
+          >
+            Add to cart
+          </Button>
+        </Flex>
+      </Stack>
     </Link>
   );
 };

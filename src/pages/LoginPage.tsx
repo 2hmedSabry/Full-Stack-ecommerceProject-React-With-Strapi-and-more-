@@ -18,22 +18,27 @@ import {
   FormHelperText,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLogin, userLogin } from "../app/features/loginSlice";
+import type { AppDispatch } from "../app/store";
 
 interface User {
-  email: string;
+  identifier: string;
   password: string;
 }
 
-
 export default function Login() {
+  const dispatch = useDispatch<AppDispatch>();
+  const {loading } = useSelector(selectLogin);
+
   const [user, setUser] = useState<User>({
-    email: "",
+    identifier: "",
     password: "",
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
+  const [isidentifierValid, setIsidentifierValid] = useState<boolean>(false);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({
@@ -46,20 +51,27 @@ export default function Login() {
     e.preventDefault();
     console.log(user);
 
-    if(!user.email){
-      setIsEmailValid(true)
-    } else{
-           setIsEmailValid(false)
+    if (!user.identifier) {
+      setIsidentifierValid(true);
+    } else {
+      setIsidentifierValid(false);
     }
-    if(!user.password){
-      setIsPasswordValid(true)
-    }else{
-          setIsPasswordValid(false)
+    if (!user.password) {
+      setIsPasswordValid(true);
+    } else {
+      setIsPasswordValid(false);
     }
 
-        console.log('isInEmailValid' ,isEmailValid, 'inInPasswordValid', isPasswordValid);
+    console.log(
+      "isInidentifierValid",
+      isidentifierValid,
+      "inInPasswordValid",
+      isPasswordValid
+    );
 
-
+     if (!isidentifierValid && !isPasswordValid ) {
+      dispatch(userLogin(user ));
+    }
   };
 
   return (
@@ -82,26 +94,21 @@ export default function Login() {
           onSubmit={submitHandler}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
+            <FormControl id="identifier">
               <FormLabel>Email address</FormLabel>
               <Input
                 type="email"
-                isInvalid={isEmailValid}
+                isInvalid={isidentifierValid}
                 errorBorderColor="crimson"
-                value={
-                  user.email
-                }
-                name="email"
+                value={user.identifier}
+                name="identifier"
                 onChange={onChangeHandler}
               />
-              {
-                isEmailValid
-                && (
-                  <FormHelperText color={"crimson"}>
-                    Please enter a valid email
-                  </FormHelperText>
-                )
-              }
+              {isidentifierValid && (
+                <FormHelperText color={"crimson"}>
+                  Please enter a valid identifier
+                </FormHelperText>
+              )}
             </FormControl>
 
             <FormControl id="password">
@@ -109,10 +116,7 @@ export default function Login() {
               <InputGroup>
                 <Input
                   type={showPassword ? "text" : "password"}
-                  isInvalid={
-                    isPasswordValid
-                  }
-                  
+                  isInvalid={isPasswordValid}
                   errorBorderColor="crimson"
                   value={user.password}
                   name="password"
@@ -130,14 +134,11 @@ export default function Login() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              {
-                isPasswordValid
-                && (
-                  <FormHelperText color={"crimson"}>
-                    Please enter a valid password
-                  </FormHelperText>
-                )
-              }
+              {isPasswordValid && (
+                <FormHelperText color={"crimson"}>
+                  Please enter a valid password
+                </FormHelperText>
+              )}
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -149,12 +150,10 @@ export default function Login() {
                 <Text color={"blue.400"}>Forgot password?</Text>
               </Stack>
               <Button
-                bg={
-                    isEmailValid || isPasswordValid ? "red.400" : "blue.400"
-                }
+                bg={isidentifierValid || isPasswordValid ? "red.400" : "blue.400"}
                 color={"white"}
                 _hover={
-                    isEmailValid || isPasswordValid
+                  isidentifierValid || isPasswordValid
                     ? {
                         bg: "red.500",
                       }
@@ -163,7 +162,9 @@ export default function Login() {
                       }
                 }
                 type="submit"
-              >
+                
+                isLoading={loading}
+  >
                 Sign in
               </Button>
             </Stack>
