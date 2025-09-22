@@ -1,5 +1,8 @@
 import { Grid } from "@chakra-ui/react";
 import ProductCard from "../components/ProductCard";
+// import axios from "axios";
+// import { useEffect, useState } from "react";
+// import { useQuery } from "@tanstack/react-query";
 import ProductSkeleton from "../components/ProductCardSkeleton";
 import { useEffect } from "react";
 import {
@@ -27,9 +30,20 @@ const Products = () => {
   const dispatch = useAppDispatch();
   const { productList, loading, error } = useSelector(productsSelector);
 
-  console.log(productList);
-console.log(error);
+  console.log(error);
 
+  // const getProductsList = async () => {
+  //   const { data } = await axios.get(
+  //     `${import.meta.env.VITE_SERVER_URL}/api/products?populate=*`
+  //   );
+
+  //   return data;
+  // };
+
+  // const { isLoading, data } = useQuery({
+  //   queryKey: ["products"],
+  //   queryFn: getProductsList,
+  // });
 
   useEffect(() => {
     dispatch(getProductsList());

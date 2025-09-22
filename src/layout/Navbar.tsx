@@ -20,6 +20,11 @@ import {
 import { BsMoon, BsSun } from "react-icons/bs";
 import { Link as RouterLink } from "react-router-dom";
 import CookiesService from "../services/CookiesService";
+import { useAppDispatch } from "../app/store";
+import { onOpenCartDrawerAction } from "../app/features/globalSlice";
+import { useSelector } from "react-redux";
+import { cartSelector } from "../app/features/cartSlice";
+import { MdOutlineShoppingCart } from "react-icons/md";
 
 const Links = ["Dashboard", "Products", "About"];
 
@@ -41,7 +46,10 @@ const NavLink = ({ children }: { children: string }) => {
   );
 };
 
+
 export default function Navbar() {
+  const dispatch = useAppDispatch();
+  const cartData = useSelector(cartSelector);
   const { colorMode, toggleColorMode } = useColorMode();
   const token = CookiesService.getCookie("jwt");
 
@@ -49,6 +57,9 @@ export default function Navbar() {
     CookiesService.removeCookie("jwt");
     window.location.reload();
   };
+
+    const onOpen = () => dispatch(onOpenCartDrawerAction())
+
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -71,6 +82,7 @@ export default function Navbar() {
               <Button onClick={toggleColorMode}>
                 {colorMode === "light" ? <BsMoon /> : <BsSun />}
               </Button>
+              <Button onClick={onOpen}><MdOutlineShoppingCart/> ({cartData.cartProducts.length})</Button>
               {token ? (
                 <Menu>
                   <MenuButton

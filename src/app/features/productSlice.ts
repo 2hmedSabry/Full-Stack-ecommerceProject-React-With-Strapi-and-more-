@@ -98,19 +98,8 @@ const productSlice = createSlice({
     
 
 }
-
-
-
-    
-
-
-
-
-
 })
 
 
 export const productsSelector =   ({product}: RootState) => product
-
-
 export default productSlice.reducer;
