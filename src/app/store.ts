@@ -8,6 +8,7 @@ import productSlice from "./features/productSlice";
 import cartSlice from "./features/cartSlice";
 
 import { useDispatch } from "react-redux";
+import { productApiSlice  } from "./services/product";
 
     const persistCartConfig  = {
         key : 'cart',
@@ -22,13 +23,14 @@ const persistedCart = persistReducer(persistCartConfig , cartSlice)
         login : loginSlice ,
         cart : persistedCart,
         product : productSlice,
-        global : globalSlice
+        global : globalSlice,
+        [productApiSlice.reducerPath]: productApiSlice.reducer,
 
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false 
-    })
+    }).concat([productApiSlice.middleware])
 });
 
 
