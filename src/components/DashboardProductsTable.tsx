@@ -9,14 +9,19 @@ import {
   Img,
   Button,
   useDisclosure,
+  Tooltip,
 } from "@chakra-ui/react";
-import { useDeleteDashboardProductsMutation, useGetDashboardProductsQuery } from "../app/services/product";
+import {
+  useDeleteDashboardProductsMutation,
+  useGetDashboardProductsQuery,
+} from "../app/services/product";
 import TableSkeleton from "./TableSkeleton";
 import { Link } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { FiEdit2 } from "react-icons/fi";
 import CustomAlertDialog from "../Shared/AlertDialog";
+import { useEffect, useState } from "react";
 interface IProduct {
   documentId: number;
   title: string;
@@ -30,16 +35,24 @@ interface IProduct {
 }
 
 const DashboardProductsTable = () => {
+  const [clickedProductId, setClickedProductId] = useState<number | null>(null);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { isLoading, data, error } = useGetDashboardProductsQuery({ page: 1 });
-  const [destoryProduct , {isLoading : isDestroying ,isSuccess }] = useDeleteDashboardProductsMutation()
+  const [destoryProduct, { isLoading: isDestroying, isSuccess }] =
+    useDeleteDashboardProductsMutation();
 
-  console.log({ data, error });
+  console.log({ error });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setClickedProductId(null);
+      onClose();
+    }
+  }, [isSuccess, onClose]);
+
   if (isLoading) return <TableSkeleton />;
-console.log(isDestroying);
-console.log(isSuccess);
-
 
   return (
     <>
@@ -65,11 +78,15 @@ console.log(isSuccess);
                 <Td>{item.documentId}</Td>
                 <Td>{item.title}</Td>
                 {/* <Td whiteSpace="normal" wordBreak='break-word'>{item.description.slice(0,100)}</Td> */}
-                <Td>{item.category[0]?.title || "N/A"}</Td>
+                <Td>
+                  {" "}
+                  {item.category?.map((c) => c.title).join(", ") || "N/A"}{" "}
+                </Td>
                 <Td>{item.stock}</Td>
                 <Td>
                   <Img
                     w={"100px"}
+                    h={"50px"}
                     src={`${import.meta.env.VITE_SERVER_URL}${item.image.url}`}
                     alt={item.title}
                   />
@@ -78,31 +95,41 @@ console.log(isSuccess);
                   ${item.price.toFixed(2)}
                 </Td>
                 <Td>
-                  <Button
-                    as={Link}
-                    to={`/products/${item.documentId}`}
-                    colorScheme="purple"
-                    variant={"solid"}
-                    mr={"10px"}
-                    onClick={() => {}}
-                  >
-                    <AiOutlineEye />
-                  </Button>
-                  <Button
-                    colorScheme="red"
-                    variant={"solid"}
-                    mr={3}
-                    onClick={onOpen}
-                  >
-                    <BsTrash />
-                  </Button>
-                  <Button
-                    colorScheme="blue"
-                    variant={"solid"}
-                    onClick={() => {}}
-                  >
-                    <FiEdit2 />
-                  </Button>
+                  <Tooltip label="View">
+                    <Button
+                      as={Link}
+                      to={`/products/${item.documentId}`}
+                      colorScheme="purple"
+                      variant={"solid"}
+                      mr={"10px"}
+                      onClick={() => {}}
+                    >
+                      <AiOutlineEye />
+                    </Button>
+                  </Tooltip>
+
+                  <Tooltip label="DELETE">
+                    <Button
+                      colorScheme="red"
+                      variant={"solid"}
+                      mr={3}
+                      onClick={() => {
+                        setClickedProductId(item.documentId);
+                        onOpen();
+                      }}
+                    >
+                      <BsTrash />
+                    </Button>
+                  </Tooltip>
+                  <Tooltip label="EDIT">
+                    <Button
+                      colorScheme="blue"
+                      variant={"solid"}
+                      onClick={() => {}}
+                    >
+                      <FiEdit2 />
+                    </Button>
+                  </Tooltip>
                 </Td>
               </Tr>
             ))}
@@ -119,7 +146,10 @@ console.log(isSuccess);
         }
         okTxt={"OK"}
         cancelTxt={"cancel"}
-        onOkHandler={()=>destoryProduct('a2nyns5hbr552bxb72awahp5')}
+        onOkHandler={() => {
+          if (clickedProductId !== null) destoryProduct(clickedProductId);
+        }}
+        isLoading={isDestroying}
       />
     </>
   );

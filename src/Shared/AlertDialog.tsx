@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 
-function CustomAletDialog({isOpen , onOpen , onClose ,title , description , cancelTxt ="Cancel" , okTxt ="Ok" , onOkHandler } : {
+function CustomAletDialog({isOpen , onOpen , onClose ,title , description , cancelTxt ="Cancel" , okTxt ="Ok" , onOkHandler ,isLoading} : {
     isOpen :  boolean ,
     onOpen : ()=> void,
     onClose : ()=> void,
@@ -19,6 +19,7 @@ function CustomAletDialog({isOpen , onOpen , onClose ,title , description , canc
     cancelTxt : string , 
     okTxt : string
     onOkHandler : ()=> void
+    isLoading: boolean
 }) {
   const cancelRef = useRef<HTMLButtonElement>(null);
 
@@ -44,7 +45,7 @@ function CustomAletDialog({isOpen , onOpen , onClose ,title , description , canc
             <Button ref={cancelRef} onClick={()=> onClose}>
               {cancelTxt}
             </Button>
-            <Button colorScheme="red" ml={3} onClick={onOkHandler}>
+            <Button colorScheme="red" ml={3} onClick={onOkHandler} isLoading={isLoading} >
               {okTxt}
             </Button>
           </AlertDialogFooter>
