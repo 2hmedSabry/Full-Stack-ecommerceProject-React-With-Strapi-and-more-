@@ -6,6 +6,7 @@ import App from "./App";
 import "./index.css";
 import { Provider } from "react-redux";
 import store from "./app/store";
+import InternetConnectionProvider from "./Provider/InternetConnectionProvider";
 
 // 1. Chakra UI theme
 const theme = extendTheme({
@@ -37,14 +38,17 @@ const queryClient = new QueryClient({
 
 // 3. Render App
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <Provider store={store}>
     <QueryClientProvider client={queryClient}>
+  <Provider store={store}>
+  <InternetConnectionProvider>
       <Router>
         <ChakraProvider theme={theme}>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <App />
         </ChakraProvider>
-      </Router>
-    </QueryClientProvider>
+      </Router>   
+  </InternetConnectionProvider>
   </Provider>
+    </QueryClientProvider>
+
 );

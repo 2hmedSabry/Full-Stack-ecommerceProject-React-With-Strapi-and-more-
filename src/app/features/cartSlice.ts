@@ -1,34 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addItemToShoppingCart } from "../../utils";
 import { createStandaloneToast } from "@chakra-ui/react"
-interface IProduct {
-        documentId: number;
-        title: string;
-        description: string;
-        price: number;
-        stock: number;
-        createdAt: string;
-        thumbnail: string;
-        category: string;
-        image: {
-            url: string;
-        };
-        quantity : number
-     }
+import type ICartProduct from "../../types/ICartProduct";
+import type IProduct from "../../types/IProduct";
 
 
-const initialState : {cartProducts : IProduct[]} = {
+const initialState : {cartProducts : ICartProduct[]} = {
     cartProducts : []
 };
 const {toast} = createStandaloneToast()
+
+
+
+
+export function mapProductToCart(product: IProduct): ICartProduct {
+  return {
+    documentId: product.documentId,
+    title: product.title,
+    description: product.description,
+    price: product.price,
+    stock: product.stock,
+    createdAt: product.createdAt ?? "",
+    category: product.category[0]?.title || "",   // خد أول تصنيف بس
+    thumbnail: product.thumbnail.formats.thumbnail.url, // نزّل الـ url
+    image: product.image?.formats.thumbnail.url || "", 
+    quantity: 1,        // 👈 أول ما يضاف للكارت، يبدأ بواحد
+  };
+}
 
 
 const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addToCart : (state , action) => {
-            state.cartProducts  = addItemToShoppingCart(action.payload , state.cartProducts)
+        addToCart : (state , action : { payload: IProduct }) => {
+            const cartItem = mapProductToCart(action.payload)
+            state.cartProducts  = addItemToShoppingCart(cartItem , state.cartProducts)
         },
         removeFromCart: (state , action) => {
             state.cartProducts = state.cartProducts.filter(item => item.documentId !== action.payload)

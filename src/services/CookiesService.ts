@@ -13,11 +13,11 @@ class CookiesService {
         path?: string;
         expires?: Date;
       }) {
-        cookies.set(key, value, options );
+        return cookies.set(key, value, options );
     }
     // Remove
     public removeCookie(key: string) {
-        cookies.remove(key);
+        return cookies.remove(key);
     }
   
 }

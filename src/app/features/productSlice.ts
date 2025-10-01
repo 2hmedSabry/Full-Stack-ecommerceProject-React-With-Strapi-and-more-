@@ -1,21 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../api/axios.config";
 import type { RootState } from "../store";
-
-interface IProduct {
-        documentId: number;
-        title: string;
-        description: string;
-        price: number;
-        stock: number;
-        createdAt: string;
-        thumbnail: string;
-        category: string;
-        image: {
-            url: string;
-        }
-        url: string
-    }
+import type IProduct from "../../types/IProduct";
 
 
 

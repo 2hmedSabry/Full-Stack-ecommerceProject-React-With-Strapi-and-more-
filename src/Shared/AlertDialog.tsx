@@ -10,9 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 
-function CustomAletDialog({isOpen , onOpen , onClose ,title , description , cancelTxt ="Cancel" , okTxt ="Ok" , onOkHandler ,isLoading} : {
+function CustomAletDialog({isOpen , onClose ,title , description , cancelTxt ="Cancel" , okTxt ="Ok" , onOkHandler ,isLoading} : {
     isOpen :  boolean ,
-    onOpen : ()=> void,
     onClose : ()=> void,
     title : string,
     description : string,
@@ -25,7 +24,6 @@ function CustomAletDialog({isOpen , onOpen , onClose ,title , description , canc
 
   return (
     <>
-      <Button onClick={()=>onOpen}>Discard</Button>
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef as React.RefObject<HTMLButtonElement>}

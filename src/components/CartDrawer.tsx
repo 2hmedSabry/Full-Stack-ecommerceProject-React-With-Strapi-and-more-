@@ -36,7 +36,7 @@ const onClose = () => dispatch(osCloseCartDrawerAction())
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton onClick={close} />
+          <DrawerCloseButton onClick={onClose} />
           <DrawerHeader>
             Your Shopping Cart. {cartData.cartProducts.length}
           </DrawerHeader>

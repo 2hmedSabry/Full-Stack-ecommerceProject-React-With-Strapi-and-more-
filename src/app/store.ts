@@ -6,6 +6,7 @@ import globalSlice from "./features/globalSlice";
 import loginSlice from "./features/loginSlice";
 import productSlice from "./features/productSlice";
 import cartSlice from "./features/cartSlice";
+import networkSlice from './features/networkSlice'
 
 import { useDispatch } from "react-redux";
 import { productApiSlice  } from "./services/product";
@@ -20,6 +21,7 @@ const persistedCart = persistReducer(persistCartConfig , cartSlice)
 
  const store = configureStore({
     reducer: {
+        network : networkSlice,
         login : loginSlice ,
         cart : persistedCart,
         product : productSlice,

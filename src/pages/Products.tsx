@@ -11,20 +11,9 @@ import {
 } from "../app/features/productSlice";
 import { useAppDispatch } from "../app/store";
 import { useSelector } from "react-redux";
+import type IProduct from "../types/IProduct";
 
-interface Product {
-  documentId: number;
-  title: string;
-  description: string;
-  price: number;
-  stock: number;
-  createdAt: string;
-  thumbnail: string;
-  category: string;
-  image: {
-    url: string;
-  };
-}
+
 
 const Products = () => {
   const dispatch = useAppDispatch();
@@ -63,7 +52,6 @@ const Products = () => {
     );
   }
 
-  console.log(productList);
 
   return (
     <Grid
@@ -71,8 +59,7 @@ const Products = () => {
       templateColumns="repeat(auto-fill, minmax(300px , 1fr))"
       gap={6}
     >
-      {productList.map((product: Product) => {
-        console.log(product);
+      {productList.map((product: IProduct) => {
         return <ProductCard key={product.documentId} {...product} />;
       })}
     </Grid>

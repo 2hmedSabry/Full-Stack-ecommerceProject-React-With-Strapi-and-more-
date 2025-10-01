@@ -1,19 +1,14 @@
 import { Button, Flex, Image, Text } from "@chakra-ui/react";
 import { removeFromCart } from "../app/features/cartSlice";
 import { useAppDispatch } from "../app/store";
+import type ICartProduct from "../types/ICartProduct";
 const CartDrawerItem = ({
 documentId,
   title,
   price,
   quantity,
-  image,
-}: {
-    documentId: number;
-  title: string;
-  price: number;
-  quantity: number;
-  image: { url: string };
-}) => {
+  thumbnail,
+}: ICartProduct) => {
 
 
 
@@ -24,7 +19,7 @@ documentId,
         <Image
           borderRadius="full"
           mx={2}
-          src={`${import.meta.env.VITE_SERVER_URL}` + image?.url}
+          src={thumbnail}
           alt={title}
           width={100}
           height={100}

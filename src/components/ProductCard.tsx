@@ -1,21 +1,9 @@
 import { Button, Image, Stack, Text, Heading, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import type IProduct from "../types/IProduct";
 
-interface Product {
-  documentId: number;
-  title: string;
-  description: string;
-  price: number;
-  stock: number;
-  createdAt: string;
-  thumbnail: string;
-  category: string;
-  image: {
-    url: string;
-  };
-}
 
-const   ProductCard = (product: Product) => {
+const   ProductCard = (product: IProduct) => {
   return (
     <Link to={`/products/${product.documentId}`}>
       <Stack
@@ -61,7 +49,7 @@ const   ProductCard = (product: Product) => {
           w="full"
           fit="cover"
           mt={2}
-          src={`${import.meta.env.VITE_SERVER_URL}` + product.image.url}
+          src={product.thumbnail.formats.thumbnail.url}
           alt={product.title}
         />
         <Flex justifyContent={"space-between"} px={6}>

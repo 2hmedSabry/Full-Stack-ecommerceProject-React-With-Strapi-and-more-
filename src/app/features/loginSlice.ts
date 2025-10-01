@@ -70,12 +70,12 @@ const loginSlice = createSlice({
         state.data = action.payload;
         const date = new Date();
         const In_DAYS = 3
-        const EXPIRES_AT = + 1000 * 60 * 60 * 24 * 3 * In_DAYS
+        const EXPIRES_AT =  1000 * 60 * 60 * 24 * In_DAYS
         date.setTime(date.getTime() + EXPIRES_AT);
         const options = {
           path : '/'
           , expires: date,
-          httpOnly: true
+          // httpOnly: true
         }
         CookiesService.setCookie('jwt', action.payload.jwt , options);
         toast({

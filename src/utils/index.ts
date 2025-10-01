@@ -1,28 +1,12 @@
 import { createStandaloneToast } from "@chakra-ui/react"
+import type ICartProduct from "../types/ICartProduct"
 
 const {toast} = createStandaloneToast()
 
 
-interface IProduct {
-  documentId: number
-  title: string
-  description: string
-  price: number
-  stock: number
-  createdAt: string
-  thumbnail: string
-  category: string
-  image: {
-    url: string
-  }
-}
-
-interface IShoppingCartItem extends IProduct {
-  quantity: number
-}
 
 
-export const addItemToShoppingCart= (cartItem :  IProduct , shoppingCartItem: IShoppingCartItem[] )  => {
+export const addItemToShoppingCart= (cartItem :  ICartProduct , shoppingCartItem: ICartProduct[] )  => {
     const existsItem = shoppingCartItem.find(item => item.documentId === cartItem.documentId)
     if(existsItem){
         toast({

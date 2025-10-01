@@ -11,6 +11,9 @@ import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import DashboardProducts from "./pages/dashboard/DashboardProducts";
 const App = () => {
   const token = CookiesService.getCookie("jwt");
+console.log(token);
+
+
 
   return (
     <>

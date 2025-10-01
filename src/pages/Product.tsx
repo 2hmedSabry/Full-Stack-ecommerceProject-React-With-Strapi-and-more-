@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import ProductDetailsSkeleton from "../components/ProductDetailsSkeleton.tsx";
 import {
   Button,
-
   Flex,
   Heading,
   Stack,
@@ -90,9 +89,7 @@ const ProductPage = () => {
             bgSize="cover"
             bgPos="center"
             style={{
-              backgroundImage: `url(${import.meta.env.VITE_SERVER_URL}${
-                data?.data?.image?.url
-              })`,
+              backgroundImage: `url(${data?.data.thumbnail.formats.thumbnail.url})`,
             }}
           ></Stack>
 
