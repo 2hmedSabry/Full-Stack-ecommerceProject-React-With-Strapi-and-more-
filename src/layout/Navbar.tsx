@@ -119,9 +119,15 @@ export default function Navbar() {
                   </MenuList>
                 </Menu>
               ) : (
+                <>
                 <Button as={RouterLink} to="/login">
                   Login In
                 </Button>
+
+                <Button as={RouterLink} to="/register">
+                Sign Up
+              </Button>
+                </>
               )}
             </Stack>
           </Flex>

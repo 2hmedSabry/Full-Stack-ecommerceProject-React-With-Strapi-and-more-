@@ -1,10 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../api/axios.config";
 import  {createStandaloneToast} from '@chakra-ui/react'
-
-
-const {toast} = createStandaloneToast()
-
 import type { PayloadAction } from "@reduxjs/toolkit";
 import CookiesService from "../../services/CookiesService";
 
@@ -39,6 +35,7 @@ const initialState: LoginState = {
   error: null,
 };
 
+const {toast} = createStandaloneToast()
 // AsyncThunk
 export const userLogin = createAsyncThunk<UserResponse, { identifier: string; password: string }, { rejectValue: errorResponse }>(
   "login/userLogin",
@@ -63,8 +60,6 @@ const loginSlice = createSlice({
     .addCase(userLogin.pending, (state) => {
         state.loading = true;        
       })
-
-
       .addCase(userLogin.fulfilled, (state, action: PayloadAction<UserResponse>) => {
         state.loading = false;
         state.data = action.payload;

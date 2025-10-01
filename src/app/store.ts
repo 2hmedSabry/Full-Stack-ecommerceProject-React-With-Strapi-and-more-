@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 import globalSlice from "./features/globalSlice";
 import loginSlice from "./features/loginSlice";
+import registerSlice from "./features/RegisterSlice";
 import productSlice from "./features/productSlice";
 import cartSlice from "./features/cartSlice";
 import networkSlice from './features/networkSlice'
@@ -23,6 +24,7 @@ const persistedCart = persistReducer(persistCartConfig , cartSlice)
     reducer: {
         network : networkSlice,
         login : loginSlice ,
+        register : registerSlice,
         cart : persistedCart,
         product : productSlice,
         global : globalSlice,

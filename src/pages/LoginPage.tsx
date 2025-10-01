@@ -23,21 +23,18 @@ import { selectLogin, userLogin } from "../app/features/loginSlice";
 import type { AppDispatch } from "../app/store";
 import { Navigate } from "react-router-dom";
 
-
 interface User {
   identifier: string;
   password: string;
 }
 
-
-
-
-export default function Login({ isAuthenticated }: { isAuthenticated: boolean }) {
-
-
-  
+export default function Login({
+  isAuthenticated,
+}: {
+  isAuthenticated: boolean;
+}) {
   const dispatch = useDispatch<AppDispatch>();
-  const {loading } = useSelector(selectLogin);
+  const { loading } = useSelector(selectLogin);
 
   const [user, setUser] = useState<User>({
     identifier: "",
@@ -47,12 +44,10 @@ export default function Login({ isAuthenticated }: { isAuthenticated: boolean })
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
   const [isidentifierValid, setIsidentifierValid] = useState<boolean>(false);
-  const bgFlex = useColorModeValue("gray.50", "gray.800")
-  const bgFlex2 = useColorModeValue("white", "gray.900")
-      
+  const flexBg = useColorModeValue("gray.50", "gray.800");
+  const boxBg = useColorModeValue("white", "gray.700");
 
-
-  if(isAuthenticated) return (<Navigate to={'/'} replace />)
+  if (isAuthenticated) return <Navigate to={"/"} replace />;
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({
@@ -83,26 +78,22 @@ export default function Login({ isAuthenticated }: { isAuthenticated: boolean })
       isPasswordValid
     );
 
-     if (!isidentifierValid && !isPasswordValid ) {
-      dispatch(userLogin(user ));
+    if (!isidentifierValid && !isPasswordValid) {
+      dispatch(userLogin(user));
     }
   };
 
   return (
-    <Flex
-      minH={"100vh"}
-      align={"center"}
-      justify={"center"}
-    bg={bgFlex}
-    >
+    <Flex minH={"100vh"} align={"center"} justify={"center"} bg={flexBg}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Sign in to your account</Heading>
+          <Heading fontSize={"4xl"}>Sign In To Your Account</Heading>
         </Stack>
         <Box
           as="form"
+          minW={"380px"}
           rounded={"lg"}
-          bg={bgFlex2}
+          bg={boxBg}
           boxShadow={"lg"}
           p={8}
           onSubmit={submitHandler}
@@ -164,7 +155,9 @@ export default function Login({ isAuthenticated }: { isAuthenticated: boolean })
                 <Text color={"blue.400"}>Forgot password?</Text>
               </Stack>
               <Button
-                bg={isidentifierValid || isPasswordValid ? "red.400" : "blue.400"}
+                bg={
+                  isidentifierValid || isPasswordValid ? "red.400" : "blue.400"
+                }
                 color={"white"}
                 _hover={
                   isidentifierValid || isPasswordValid
@@ -176,9 +169,8 @@ export default function Login({ isAuthenticated }: { isAuthenticated: boolean })
                       }
                 }
                 type="submit"
-                
                 isLoading={loading}
-  >
+              >
                 Sign in
               </Button>
             </Stack>

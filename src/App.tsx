@@ -9,12 +9,10 @@ import CookiesService from "./services/CookiesService";
 import AdminDashboard from "./pages/dashboard";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import DashboardProducts from "./pages/dashboard/DashboardProducts";
+import RegisterPage from "./pages/RegisterPage";
+
 const App = () => {
   const token = CookiesService.getCookie("jwt");
-console.log(token);
-
-
-
   return (
     <>
       <Routes>
@@ -26,6 +24,10 @@ console.log(token);
           <Route
             path="/login"
             element={<LoginPage isAuthenticated={token} />}
+          />
+          <Route
+            path="/register"
+            element={<RegisterPage isAuthenticated={token} />}
           />
         </Route>
 
